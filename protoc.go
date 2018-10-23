@@ -14,7 +14,7 @@ var (
 		{{if $index}}` + string(filepath.ListSeparator) + `{{end -}}
 			{{.}}
 	{{- end -}}
-	{{- if .Descriptors}} --include_imports --descriptor_set_out={{.Descriptors}}{{- end }} --
+	{{- if .Descriptors}} --include_imports --include_source_info --descriptor_set_out={{.Descriptors}}{{- end }} --
 	{{- .Name -}}_out={{if .Plugins}}plugins={{- range $index, $plugin := .Plugins -}}
 		{{- if $index}}+{{end}}
 		{{- $plugin}}

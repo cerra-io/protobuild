@@ -1,17 +1,11 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
+	"github.com/gogo/protobuf/proto"
+	"github.com/golang/protobuf/protoc-gen-go/descriptor"
 	"io"
 	"io/ioutil"
 	"log"
-	"os"
-	"os/exec"
-	"strings"
-
-	"github.com/gogo/protobuf/proto"
-	"github.com/golang/protobuf/protoc-gen-go/descriptor"
 )
 
 type descriptorSet struct {
@@ -63,22 +57,24 @@ func (d *descriptorSet) marshalTo(w io.Writer) error {
 		return err
 	}
 
-	args := []string{
-		"protoc",
-		"--decode",
-		"google.protobuf.FileDescriptorSet",
-		d.descProto,
-	}
-
-	cmd := exec.Command(args[0], args[1:]...)
-	cmd.Stdin = bytes.NewReader(p)
-	cmd.Stdout = w
-	cmd.Stderr = os.Stderr
-
-	if !quiet {
-		fmt.Println(strings.Join(args, " "))
-	}
-	return cmd.Run()
+	//args := []string{
+	//	"protoc",
+	//	"--decode",
+	//	"google.protobuf.FileDescriptorSet",
+	//	d.descProto,
+	//}
+	//
+	//cmd := exec.Command(args[0], args[1:]...)
+	//cmd.Stdin = bytes.NewReader(p)
+	//cmd.Stdout = w
+	//cmd.Stderr = os.Stderr
+	//
+	//if !quiet {
+	//	fmt.Println(strings.Join(args, " "))
+	//}
+	//return cmd.Run()
+	w.Write(p)
+	return nil
 }
 
 func readDesc(path string) (*descriptor.FileDescriptorSet, error) {
